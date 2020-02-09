@@ -1,0 +1,48 @@
+
+<form action="" class="search-form">
+  <div class="form-group">
+    <input [(ngModel)] ="username" type="text" class="form-control" placeholder="Search Git User" name="username" (keyup)= "searchUser()" >
+  </div>
+</form>
+<div *ngIf='user'>
+  <!-- display user bio and company and other details if present from the api call   -->
+    <div class="card">
+        <div class="card-header">
+          Github Profile
+        </div>
+        <div class="card-body">
+          <div class="col-sm-3 float-right" >
+            <!-- user image and name card -->
+            <div class="card">
+              <div class="card-body">
+                <a href="{{user.html_url}}" target="_blank">
+                <img src="{{user.avatar_url}}" class=" rounded-circle card-img-top"  alt="user-image">
+              </a> 
+                <h5 class="card-title text-center">{{user.name}}</h5>
+              </div>
+            </div>   
+          </div>
+          <h5 class="card-title">{{user.name}}</h5>
+          <p class="card-text">{{user.bio}} </p>
+          <p *ngIf ="user.company" class="car-text">Works at {{user.company}}</p>
+          <button *ngIf="!btn" (click) ="buttonClick()" class="btn btn-primary btn-repo">See Repos here</button>
+         
+          <!-- hide the search repo button and show all the repo if button is clicked -->
+          <div *ngIf="btn" class="card" style="width: 40%;">
+            <div class="card-header">
+              <h5>Repositories
+              </h5>
+            </div>
+
+            <ul *ngFor= "let repo of repos" class="list-group list-group-flush"   >
+              <a href="{{repo.html_url}}" target="_blank"><li class="list-group-item">{{repo.name}}</li></a>
+            </ul>
+            
+          </div>
+        </div>
+        <!-- <div class="card-footer text-muted">
+          2 days ago
+        </div> -->
+      </div>
+  </div>
+
